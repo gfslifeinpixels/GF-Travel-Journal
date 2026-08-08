@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>✨ GF's Travel Journal ✨</title>
+    <!-- Google Fonts: modern + fun -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Fredoka+One&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            background: #1a1a2e;
+            background-image: radial-gradient(circle at 20% 30%, #2d2d5e 10%, transparent 20%),
+                radial-gradient(circle at 80% 70%, #4a2d5e 10%, transparent 25%),
+                linear-gradient(145deg, #1a1a2e, #2a1a3e);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .home-card {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 40px 40px 30px 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5),
+                0 0 0 6px rgba(255, 200, 100, 0.12),
+                0 0 0 10px rgba(200, 100, 255, 0.15);
+            padding: 20px 16px 20px;
+            border: 2px solid rgba(255, 215, 0, 0.25);
+            animation: none;
+            margin: 16px 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 769px) {
+            .home-card {
+                animation: float 6s ease-in-out infinite;
+                padding: 40px 40px 35px;
+                margin: 30px 20px;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* ===== STICKY HEADER ===== */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 4px 0 8px 0;
+            margin: -6px -6px 0 -6px;
+            border-radius: 30px 30px 20px 20px;
+            background: rgba(26, 26, 46, 0.88);
+            backdrop-filter: blur(16px);
+            border-bottom: 2px solid #ffd700;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .header {
+            padding: 10px 16px 6px 16px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .header-text h1 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            font-family: 'Fredoka One', cursive;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.3);
+            line-height: 1.1;
+        }
+
+        .header-text .tagline {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #c0b0e0;
+            margin-top: 1px;
+            letter-spacing: 0.3px;
+        }
+        .header-text .tagline i {
+            color: #ff6b9d;
+            margin: 0 3px;
+        }
+
+        /* ===== MENU BUTTON ===== */
+        .menu-btn {
+            background: rgba(255, 215, 0, 0.12);
+            border: 2px solid rgba(255, 215, 0, 0.25);
+            color: #ffd700;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.05);
+            flex-shrink: 0;
+        }
+        .menu-btn:hover {
+            background: rgba(255, 215, 0, 0.25);
+            transform: scale(1.05);
+        }
+
+        /* ===== SIDE MENU ===== */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            max-width: 85vw;
+            height: 100vh;
+            background: rgba(20, 20, 40, 0.96);
+            backdrop-filter: blur(20px);
+            border-left: 2px solid #ffd700;
+            box-shadow: -15px 0 40px rgba(0, 0, 0, 0.6);
+            padding: 20px 16px;
+            transition: right 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 999;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .side-menu.open {
+            right: 0;
+        }
+
+        .side-menu .close-btn {
+            background: none;
+            border: none;
+            color: #ffd700;
+            font-size: 1.6rem;
+            cursor: pointer;
+            align-self: flex-end;
+            padding: 6px 10px;
+            transition: transform 0.3s ease;
+        }
+        .side-menu .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .side-menu .menu-label {
+            color: #ffd700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin: 10px 0 3px 4px;
+            opacity: 0.5;
+        }
+
+        .side-menu .menu-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, rgba(255, 215, 0, 0.25), transparent);
+            margin: 4px 0 8px 0;
+        }
+
+        .side-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e0d0ff;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .side-menu a i {
+            width: 24px;
+            font-size: 1rem;
+            color: #ffd700;
+            text-align: center;
+        }
+
+        .side-menu a:hover {
+            background: rgba(255, 215, 0, 0.08);
+            border-color: rgba(255, 215, 0, 0.12);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        .side-menu a .arrow {
+            margin-left: auto;
+            font-size: 0.7rem;
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+        }
+        .side-menu a:hover .arrow {
+            opacity: 1;
+        }
+
+        /* ===== OVERLAY ===== */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+        .menu-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ===== PRICE CHIP - NOW A CLICKABLE LINK ===== */
+        .price-chip {
+            background: linear-gradient(135deg, #ff6b9d, #ff3366);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.7rem;
+            color: white;
+            border: 2px solid #ffd700;
+            box-shadow: 0 3px 0 #cc0044, 0 0 20px rgba(255, 51, 102, 0.2);
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            min-width: 70px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .price-chip:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 0 #cc0044, 0 0 30px rgba(255, 51, 102, 0.3);
+        }
+        .price-chip small {
+            display: block;
+            font-size: 0.55rem;
+            color: #ffd0d0;
+            line-height: 1.2;
+        }
+
+        /* ===== INCLUSIONS STRIP ===== */
+        .inclusion-strip {
+            background: rgba(255, 215, 0, 0.08);
+            border-radius: 30px;
+            padding: 6px 10px;
+            margin: 4px 6px 2px 6px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border: 1px solid rgba(255, 215, 0, 0.12);
+        }
+
+        .inc-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.65rem;
+            color: #e0d0ff;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            font-family: 'Montserrat', sans-serif;
+        }
+        .inc-item i {
+            font-size: 0.8rem;
+            color: #ffd700;
+        }
+
+        /* ===== WELCOME ===== */
+        .welcome {
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 30px;
+            padding: 12px 16px;
+            margin: 12px 0 18px 0;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            text-align: center;
+        }
+        .welcome h2 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            color: #ffd700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.08);
+        }
+        .welcome h2 i {
+            color: #ff6b9d;
+        }
+        .welcome p {
+            font-size: 0.85rem;
+            color: #c0b0e0;
+            font-weight: 400;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+        .welcome .emoji-line {
+            font-size: 1.3rem;
+            letter-spacing: 4px;
+            margin-top: 2px;
+        }
+
+        /* ===== DESTINATION GRID ===== */
+        .destinations {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            margin: 6px 0 16px 0;
+        }
+
+        @media (min-width: 600px) {
+            .destinations {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1000px) {
+            .destinations {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+            }
+        }
+
+        .dest-card {
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 30px 14px 30px 14px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 215, 0, 0.12);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            backdrop-filter: blur(4px);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .dest-card:active {
+            transform: scale(0.97);
+        }
+        .dest-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            border-color: #ffd700;
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.08);
+        }
+
+        .dest-img {
+            width: 100%;
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+            border-bottom: 2px solid #ffd700;
+            position: relative;
+        }
+
+        .dest-img .dest-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 14px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.75));
+            color: white;
+        }
+        .dest-img .dest-overlay .dest-year {
+            font-size: 1.8rem;
+            font-weight: 900;
+            font-family: 'Fredoka One', cursive;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            color: #ffd700;
+        }
+        .dest-img .dest-overlay .dest-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .dest-body {
+            padding: 12px 16px 14px;
+        }
+        .dest-body .dest-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            font-family: 'Fredoka One', cursive;
+            color: #ffd700;
+        }
+        .dest-body .dest-sub {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #b0a0c8;
+            margin-top: 2px;
+        }
+        .dest-body .dest-sub i {
+            color: #ff6b9d;
+            margin: 0 2px;
+        }
+
+        .click-hint-badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            margin-top: 6px;
+            transition: all 0.3s ease;
+        }
+        .dest-card:active .click-hint-badge {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer-modern {
+            background: rgba(255, 215, 0, 0.06);
+            padding: 12px 16px;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            backdrop-filter: blur(8px);
+            gap: 10px;
+        }
+
+        @media (min-width: 500px) {
+            .footer-modern {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 14px 20px;
+            }
+        }
+
+        .footer-contact {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #c0b0e0;
+        }
+
+        .footer-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #ffd700;
+            object-fit: cover;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+        }
+        .footer-avatar:active {
+            transform: scale(0.95);
+        }
+
+        .footer-contact .contact-name {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.85rem;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            padding-bottom: 1px;
+            transition: all 0.3s ease;
+        }
+        .footer-contact .contact-name:active {
+            color: #ffffff;
+            border-bottom-color: #ffd700;
+        }
+
+        .footer-handle {
+            background: linear-gradient(135deg, #ff6b9d, #ff3366);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            border: 2px solid #ffd700;
+            font-family: 'Fredoka One', cursive;
+            text-align: center;
+            line-height: 1.3;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 51, 102, 0.12);
+        }
+
+        .footer-handle .hashtag {
+            display: block;
+            font-size: 0.55rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #ffd0d0;
+            letter-spacing: 1px;
+        }
+
+        .footnote {
+            text-align: center;
+            font-size: 0.5rem;
+            color: #8070a0;
+            margin-top: 8px;
+            font-weight: 400;
+            opacity: 0.6;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.4;
+            padding: 0 4px;
+        }
+
+        /* ===== MODAL OVERLAY ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 16px 12px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 30px 16px 30px 16px;
+            border: 2px solid #ffd700;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            padding: 0;
+            animation: slideUp 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: rgba(255, 215, 0, 0.08);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-radius: 28px 14px 0 0;
+        }
+        .modal-header .modal-title {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #ffd700;
+            font-family: 'Fredoka One', cursive;
+        }
+        .modal-header .modal-close {
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+            border: 2px solid rgba(255, 215, 0, 0.25);
+            font-size: 1.2rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-header .modal-close:hover {
+            background: rgba(255, 215, 0, 0.25);
+            transform: scale(1.05);
+        }
+
+        .modal-body {
+            padding: 16px 18px 20px;
+        }
+
+        .modal-body .day-block {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255, 215, 0, 0.08);
+        }
+
+        .modal-body .day-block .day-title {
+            font-size: 1rem;
+            font-weight: 900;
+            color: #ffd700;
+            font-family: 'Fredoka One', cursive;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-body .day-block .day-title i {
+            color: #ff6b9d;
+        }
+
+        .modal-body .time-activity-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(255, 215, 0, 0.06);
+        }
+        .modal-body .time-activity-row:last-child {
+            border-bottom: none;
+        }
+        .modal-body .time-badge {
+            flex: 0 0 70px;
+            font-weight: 800;
+            font-size: 0.7rem;
+            color: #e0d0ff;
+            background: rgba(255, 215, 0, 0.06);
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.08);
+            font-family: 'Montserrat', sans-serif;
+        }
+        .modal-body .activity-text {
+            flex: 1;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #c0b0e0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .modal-body .activity-text i {
+            font-size: 0.9rem;
+            color: #ff6b9d;
+            min-width: 20px;
+        }
+
+        .modal-body .alert-note {
+            background: rgba(255, 215, 0, 0.06);
+            border-radius: 12px;
+            padding: 4px 12px;
+            margin-top: 6px;
+            border: 1px solid rgba(255, 215, 0, 0.08);
+            font-weight: 600;
+            display: inline-block;
+            color: #e0d0ff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+        }
+
+        /* ===== ABOUT ME MODAL - UPDATED WITH CENTERED IMAGE ===== */
+        .about-content {
+            padding: 10px 6px;
+        }
+
+        .about-content .about-avatar-center {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .about-content .about-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid #ffd700;
+            object-fit: cover;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .about-content .story-title {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #ffd700;
+            font-family: 'Fredoka One', cursive;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .about-content .story-sub {
+            font-size: 1rem;
+            color: #e0d0ff;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .about-content .story-sub i {
+            color: #ff6b9d;
+            margin: 0 4px;
+        }
+
+        .about-content .story-text p {
+            font-size: 0.9rem;
+            color: #c0b0e0;
+            line-height: 1.8;
+            margin-bottom: 14px;
+            padding: 0 4px;
+        }
+        .about-content .story-text p i {
+            color: #ffd700;
+            margin: 0 4px;
+        }
+
+        .about-content .about-highlight {
+            background: rgba(255, 215, 0, 0.06);
+            border-left: 3px solid #ffd700;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-style: italic;
+            color: #e0d0ff;
+        }
+        .about-content .about-highlight i {
+            color: #ff6b9d;
+        }
+
+        .about-content .about-offer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 16px;
+            margin: 12px 0 10px 0;
+            padding: 0 4px;
+        }
+        .about-content .about-offer-grid .offer-item {
+            font-size: 0.8rem;
+            color: #c0b0e0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .about-content .about-offer-grid .offer-item i {
+            color: #ffd700;
+            font-size: 0.9rem;
+        }
+
+        .about-content .about-signoff {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffd700;
+            font-family: 'Fredoka One', cursive;
+            margin-top: 16px;
+            letter-spacing: 1px;
+        }
+        .about-content .about-signoff i {
+            color: #ff6b9d;
+        }
+
+        .about-content .about-emoji-line {
+            text-align: center;
+            font-size: 1.8rem;
+            letter-spacing: 6px;
+            margin: 8px 0 4px 0;
+        }
+
+        .about-content .about-footer-text {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #8070a0;
+            margin-top: 10px;
+        }
+        .about-content .about-footer-text i {
+            color: #ff6b9d;
+        }
+
+        @media (max-width: 600px) {
+            .about-content .about-offer-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-content .about-avatar {
+                width: 80px;
+                height: 80px;
+            }
+            .about-content .story-title {
+                font-size: 1.3rem;
+            }
+            .about-content .story-sub {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .home-card {
+                padding: 12px 10px 14px;
+                margin: 10px 6px;
+                border-radius: 28px;
+            }
+            .header-text h1 {
+                font-size: 1.3rem;
+            }
+            .header-text .tagline {
+                font-size: 0.6rem;
+            }
+            .menu-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 1rem;
+            }
+            .price-chip {
+                font-size: 0.6rem;
+                padding: 3px 10px;
+                min-width: 60px;
+            }
+            .price-chip small {
+                font-size: 0.5rem;
+            }
+            .welcome h2 {
+                font-size: 1.2rem;
+            }
+            .welcome p {
+                font-size: 0.75rem;
+            }
+            .dest-img {
+                height: 120px;
+            }
+            .dest-body .dest-title {
+                font-size: 1.1rem;
+            }
+            .inclusion-strip {
+                gap: 4px;
+                padding: 4px 8px;
+            }
+            .inc-item {
+                font-size: 0.55rem;
+                padding: 2px 8px;
+            }
+            .inc-item i {
+                font-size: 0.7rem;
+            }
+            .footer-handle {
+                font-size: 0.7rem;
+                padding: 4px 12px;
+            }
+            .footer-contact .contact-name {
+                font-size: 0.7rem;
+            }
+            .footer-avatar {
+                width: 30px;
+                height: 30px;
+            }
+            .side-menu {
+                width: 260px;
+                padding: 16px 12px;
+                right: -280px;
+            }
+            .side-menu a {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+            .side-menu a i {
+                font-size: 0.9rem;
+                width: 20px;
+            }
+            .side-menu .close-btn {
+                font-size: 1.3rem;
+            }
+            .modal-content {
+                border-radius: 20px 12px 20px 12px;
+            }
+            .modal-header .modal-title {
+                font-size: 1rem;
+            }
+            .modal-body .time-badge {
+                flex: 0 0 55px;
+                font-size: 0.6rem;
+            }
+            .modal-body .activity-text {
+                font-size: 0.7rem;
+            }
+            .modal-body .day-block .day-title {
+                font-size: 0.85rem;
+            }
+            .about-content .story-title {
+                font-size: 1.1rem;
+            }
+            .about-content p {
+                font-size: 0.8rem;
+            }
+            .about-content .about-avatar {
+                width: 70px;
+                height: 70px;
+            }
+            .about-content .about-offer-grid .offer-item {
+                font-size: 0.7rem;
+            }
+            .about-content .about-signoff {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .header-text h1 {
+                font-size: 1.1rem;
+            }
+            .price-chip {
+                font-size: 0.5rem;
+                padding: 2px 8px;
+                min-width: 50px;
+            }
+            .price-chip small {
+                font-size: 0.45rem;
+            }
+            .dest-img {
+                height: 100px;
+            }
+            .dest-body .dest-title {
+                font-size: 1rem;
+            }
+            .welcome h2 {
+                font-size: 1rem;
+            }
+            .dest-body .dest-sub {
+                font-size: 0.7rem;
+            }
+        }
+
+        .dest-card,
+        .menu-btn,
+        .side-menu a,
+        .footer-avatar,
+        .footer-contact .contact-name {
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="home-card">
+
+        <!-- ===== STICKY HEADER ===== -->
+        <div class="sticky-header">
+
+            <!-- HEADER -->
+            <div class="header">
+                <div class="header-left">
+                    <div class="header-text">
+                        <h1>✨ GF: Global Footprints</h1>
+                        <div class="tagline">
+                            <i class="fas fa-map-pin"></i> helping you leave your footprints around the world
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScab4_T-CVVq55FGL6E1L9Y9TczrxaygxGDLg8HXHI-T9jhrw/viewform?usp=publish-editor" target="_blank" class="price-chip">
+                        <small>✈️ plan your next adventure</small>
+                    </a>
+                    <button class="menu-btn" onclick="toggleMenu()" aria-label="Open menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- INCLUSIONS STRIP -->
+            <div class="inclusion-strip">
+                <span class="inc-item"><i class="fas fa-hotel"></i> Handpicked stays</span>
+                <span class="inc-item"><i class="fas fa-route"></i> Curated routes</span>
+                <span class="inc-item"><i class="fas fa-star"></i> Insider tips</span>
+            </div>
+
+        </div>
+
+        <!-- ===== OVERLAY ===== -->
+        <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+        <!-- ===== SIDE MENU ===== -->
+        <div class="side-menu" id="sideMenu">
+            <button class="close-btn" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+
+            <div class="menu-label">✦ explore</div>
+            <!-- About Me -->
+            <a onclick="openModal('modal-about')">
+                <i class="fas fa-user"></i> About Me <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
+
+            <hr class="menu-divider" />
+
+            <div class="menu-label">🗺️ past adventures</div>
+            <a onclick="openModal('modal-hk-macau')">
+                <i class="fas fa-umbrella-beach"></i> Hong Kong · Macau 2025 <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
+            <a onclick="openModal('modal-indochina')">
+                <i class="fas fa-temple"></i> IndoChina 2025 <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
+            <a onclick="openModal('modal-japan2025')">
+                <i class="fas fa-cherry-blossom"></i> Japan 2025 <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
+
+            <hr class="menu-divider" />
+
+            <div class="menu-label">🚀 upcoming & live</div>
+            <a href="https://gfslifeinpixels.github.io/China-2026/" target="_blank">
+                <i class="fas fa-great-wall"></i> China 2026 <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
+            <a href="https://gfslifeinpixels.github.io/Japan-2026/" target="_blank">
+                <i class="fas fa-fuji"></i> Japan 2026 <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
+            <a href="https://gfslifeinpixels.github.io/Seoul-2026/" target="_blank">
+                <i class="fas fa-city"></i> South Korea 2026 <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
+
+            <hr class="menu-divider" />
+
+            <div style="margin-top: auto; padding: 10px 8px; font-size: 0.6rem; color: #8070a0; border-top: 1px solid rgba(255, 215, 0, 0.06);">
+                <i class="fas fa-compass"></i> GF: Global Footprints
+            </div>
+        </div>
+
+        <!-- ===== WELCOME ===== -->
+        <div class="welcome">
+            <h2><i class="fas fa-compass"></i> GF: Global Footprints</h2>
+            <p>making DIY travel simple, affordable and memorable</p>
+            <div class="emoji-line">🗺️ ✨ 🌏 🏯 🎌</div>
+        </div>
+
+        <!-- ===== DESTINATIONS ===== -->
+        <div class="destinations">
+
+            <!-- TOKYO 2026 -->
+            <a href="https://gfslifeinpixels.github.io/Japan-2026/" target="_blank" class="dest-card">
+                <div class="dest-img" style="background-image: url('https://images.pexels.com/photos/2614818/pexels-photo-2614818.jpeg?auto=compress&cs=tinysrgb&w=600');">
+                    <div class="dest-overlay">
+                        <div class="dest-year">2026</div>
+                        <div class="dest-label">🇯🇵 Tokyo</div>
+                    </div>
+                </div>
+                <div class="dest-body">
+                    <div class="dest-title">🗼 Tokyo 2026</div>
+                    <div class="dest-sub"><i class="fas fa-cherry-blossom"></i> Cherry blossoms · Shibuya · Disney</div>
+                    <span class="click-hint-badge"><i class="fas fa-hand-pointer"></i> click to view</span>
+                </div>
+            </a>
+
+            <!-- SEOUL 2026 -->
+            <a href="https://gfslifeinpixels.github.io/Seoul-2026/" target="_blank" class="dest-card">
+                <div class="dest-img" style="background-image: url('https://res.klook.com/image/upload/fl_lossy.progressive,q_auto/c_fill,w_480/v1751262716/ieyuoar2uapqcygjh8ch.jpg');">
+                    <div class="dest-overlay">
+                        <div class="dest-year">2026</div>
+                        <div class="dest-label">🇰🇷 Seoul</div>
+                    </div>
+                </div>
+                <div class="dest-body">
+                    <div class="dest-title">🏯 Seoul 2026</div>
+                    <div class="dest-sub"><i class="fas fa-tree"></i> Nami Island · palaces · night markets</div>
+                    <span class="click-hint-badge"><i class="fas fa-hand-pointer"></i> click to view</span>
+                </div>
+            </a>
+
+            <!-- BEIJING 2026 -->
+            <a href="https://gfslifeinpixels.github.io/China-2026/" target="_blank" class="dest-card">
+                <div class="dest-img" style="background-image: url('https://live.staticflickr.com/8438/7821247204_65d5e395f6_b.jpg');">
+                    <div class="dest-overlay">
+                        <div class="dest-year">2026</div>
+                        <div class="dest-label">🇨🇳 Beijing</div>
+                    </div>
+                </div>
+                <div class="dest-body">
+                    <div class="dest-title">🏮 Beijing 2026</div>
+                    <div class="dest-sub"><i class="fas fa-great-wall"></i> Great Wall · Forbidden City · dumplings</div>
+                    <span class="click-hint-badge"><i class="fas fa-hand-pointer"></i> click to view</span>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <div class="footer-modern">
+            <div class="footer-contact">
+                <span style="font-size: 0.8rem;">📩 questions? contact:</span>
+                <a href="https://www.linkedin.com/in/thegfsadvise/" target="_blank">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E03AQGltbte-MiZPA/profile-displayphoto-shrink_400_400/B4EZTe0aQkG0Ak-/0/1738905070025?e=1787788800&v=beta&t=rHTwhGRvzI_PDGDN1MFX1_I57WocqtVzl_3dXds2Rls" alt="Grace" class="footer-avatar">
+                </a>
+                <a href="https://www.linkedin.com/in/thegfsadvise/" target="_blank" class="contact-name">Grace (@theGFsadvise)</a>
+            </div>
+            <div class="footer-handle">
+                ✨ GF: Global Footprints ✨
+                <span class="hashtag">#GeeExplores</span>
+            </div>
+        </div>
+
+        <!-- ===== FOOTNOTE ===== -->
+        <div class="footnote">
+            <i class="fas fa-info-circle"></i> Click any destination card to view the full itinerary. All dates and rates are subject to change.
+        </div>
+
+    </div> <!-- end home-card -->
+
+    <!-- ============================================================ -->
+    <!-- MODAL: ABOUT ME (UPDATED with centered image & story layout) -->
+    <!-- ============================================================ -->
+    <div class="modal-overlay" id="modal-about" onclick="closeModalOutside(event, 'modal-about')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">🌏 About Me</span>
+                <button class="modal-close" onclick="closeModal('modal-about')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body about-content">
+
+                <!-- Centered Image -->
+                <div class="about-avatar-center">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E03AQGltbte-MiZPA/profile-displayphoto-shrink_400_400/B4EZTe0aQkG0Ak-/0/1738905070025?e=1787788800&v=beta&t=rHTwhGRvzI_PDGDN1MFX1_I57WocqtVzl_3dXds2Rls" alt="Grace" class="about-avatar">
+                </div>
+
+                <!-- Story Title & Sub -->
+                <div class="story-title">✈️ Good Times, Far Places</div>
+                <div class="story-sub">✨ <i class="fas fa-heart"></i> Grace · @theGFsadvise <i class="fas fa-heart"></i> ✨</div>
+
+                <!-- Story Text -->
+                <div class="story-text">
+                    <p>
+                        I'm Grace — a curious soul with a passion for exploration and a deep love for discovering the world's hidden gems. My journey began with a simple belief: travel is more than just seeing new places; it's about collecting moments, flavors, and stories.
+                    </p>
+
+                    <p>
+                        From the cherry blossom-lined streets of Tokyo to the bustling night markets of Seoul and the ancient wonders of Beijing, every destination has a story waiting to be told. I don't just plan trips — I curate experiences that stay with you long after the journey ends.
+                    </p>
+                </div>
+
+                <div class="about-highlight">
+                    <i class="fas fa-quote-left"></i> Travel is not just about seeing new places. It's about collecting moments, tasting local flavors, and connecting with people who make this world feel like home.
+                </div>
+
+                <div class="story-text">
+                    <p>
+                        <strong>🌏 Why GF: Global Footprints?</strong><br />
+                        The "GF" stands for <strong>"Global Footprints"</strong> — because that's exactly what I believe travel should be. Whether you're a solo adventurer, a couple, or a group of friends, I'm here to help you turn your travel dreams into reality.
+                    </p>
+                </div>
+
+                <div style="font-size: 1.1rem; font-weight: 700; color: #ffd700; margin: 10px 0 8px 0; text-align: center; font-family: 'Fredoka One', cursive;">
+                    ✨ What I offer:
+                </div>
+
+                <div class="about-offer-grid">
+                    <span class="offer-item"><i class="fas fa-map"></i> Handcrafted, day-by-day itineraries</span>
+                    <span class="offer-item"><i class="fas fa-hotel"></i> Curated hotel recommendations</span>
+                    <span class="offer-item"><i class="fas fa-utensils"></i> Local food guides</span>
+                    <span class="offer-item"><i class="fas fa-camera"></i> Instagram-worthy spots</span>
+                    <span class="offer-item"><i class="fas fa-lightbulb"></i> Insider tips only locals know</span>
+                    <span class="offer-item"><i class="fas fa-globe"></i> Global Footprints community</span>
+                </div>
+
+                <div class="story-text">
+                    <p>
+                        <i class="fas fa-heart" style="color: #ff6b9d;"></i> Whether you're planning your first big trip or your fiftieth, I'm here to make every journey effortless, memorable, and full of good times.
+                    </p>
+                </div>
+
+                <div class="about-emoji-line">
+                    🌏 ✈️ 🗺️ 📸 🍜
+                </div>
+
+                <div class="about-signoff">
+                    <i class="fas fa-heart" style="color: #ff6b9d;"></i> Good Times, Far Places <i class="fas fa-heart" style="color: #ff6b9d;"></i>
+                </div>
+
+                <div class="about-footer-text">
+                    <i class="fas fa-hashtag"></i> #GeeExplores · @theGFsadvise
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODAL: HONG KONG - MACAU 2025 -->
+    <!-- ============================================================ -->
+    <div class="modal-overlay" id="modal-hk-macau" onclick="closeModalOutside(event, 'modal-hk-macau')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">🇭🇰 Hong Kong · Macau 2025</span>
+                <button class="modal-close" onclick="closeModal('modal-hk-macau')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- DAY 1 - Monday, Nov 3 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-plane"></i> Monday, November 3, 2025</div>
+                    <div class="time-activity-row"><span class="time-badge">3:30 PM</span><span class="activity-text"><i class="fas fa-plane-departure"></i> Departure from NAIA</span></div>
+                    <div class="time-activity-row"><span class="time-badge">6:10 PM</span><span class="activity-text"><i class="fas fa-plane-arrival"></i> Arrival in HKG</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-shuttle-van"></i> Airport Transfer</span></div>
+                    <div class="time-activity-row"><span class="time-badge">8:00 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Hongkong Hotel Check In</span></div>
+                </div>
+
+                <!-- DAY 2 - Tuesday, Nov 4 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-castle"></i> Tuesday, November 4, 2025 · DISNEYLAND (DIY)</div>
+                    <div class="time-activity-row"><span class="time-badge">9:00 AM</span><span class="activity-text"><i class="fas fa-train"></i> Commute to Disneyland</span></div>
+                    <div class="time-activity-row"><span class="time-badge">10:00 AM</span><span class="activity-text"><i class="fas fa-dragon"></i> Start of Disneyland Adventure</span></div>
+                    <div class="time-activity-row"><span class="time-badge">8:00 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Back to Hotel</span></div>
+                    <div class="alert-note"><i class="fas fa-star"></i> ✨ Enjoy the magic of Hong Kong Disneyland!</div>
+                </div>
+
+                <!-- DAY 3 - Wednesday, Nov 5 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-city"></i> Wednesday, November 5, 2025 · HONG KONG CITY TOUR</div>
+                    <div class="time-activity-row"><span class="time-badge">8:00 AM</span><span class="activity-text"><i class="fas fa-bus"></i> Hong Kong City Tour</span></div>
+                    <div class="time-activity-row"><span class="time-badge">12:00 PM</span><span class="activity-text"><i class="fas fa-utensils"></i> Lunch</span></div>
+                    <div class="time-activity-row"><span class="time-badge">4:00 PM</span><span class="activity-text"><i class="fas fa-flag-checkered"></i> End of Tour</span></div>
+                    <div class="time-activity-row"><span class="time-badge">6:00 PM</span><span class="activity-text"><i class="fas fa-utensils"></i> Dinner</span></div>
+                </div>
+
+                <!-- DAY 4 - Thursday, Nov 6 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-ship"></i> Thursday, November 6, 2025 · HKG - MFM</div>
+                    <div class="time-activity-row"><span class="time-badge">11:00 AM</span><span class="activity-text"><i class="fas fa-hotel"></i> Hotel Check Out</span></div>
+                    <div class="time-activity-row"><span class="time-badge">1:00 PM</span><span class="activity-text"><i class="fas fa-ship"></i> Ferry Ride to Macau</span></div>
+                    <div class="time-activity-row"><span class="time-badge">3:00 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Macau Hotel Check In</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-clock"></i> Free Time</span></div>
+                    <div class="time-activity-row"><span class="time-badge">6:00 PM</span><span class="activity-text"><i class="fas fa-utensils"></i> Dinner</span></div>
+                </div>
+
+                <!-- DAY 5 - Friday, Nov 7 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-temple"></i> Friday, November 7, 2025 · MACAU TOUR</div>
+                    <div class="time-activity-row"><span class="time-badge">8:00 AM</span><span class="activity-text"><i class="fas fa-bus"></i> Macau Day Tour</span></div>
+                    <div class="time-activity-row"><span class="time-badge">12:00 PM</span><span class="activity-text"><i class="fas fa-utensils"></i> Lunch</span></div>
+                    <div class="time-activity-row"><span class="time-badge">5:00 PM</span><span class="activity-text"><i class="fas fa-flag-checkered"></i> End of Tour</span></div>
+                    <div class="time-activity-row"><span class="time-badge">6:00 PM</span><span class="activity-text"><i class="fas fa-utensils"></i> Dinner</span></div>
+                    <div class="time-activity-row"><span class="time-badge">8:00 PM</span><span class="activity-text"><i class="fas fa-shuttle-van"></i> Airport Transfer</span></div>
+                    <div class="time-activity-row"><span class="time-badge">10:25 PM</span><span class="activity-text"><i class="fas fa-plane-departure"></i> Departure from MFM</span></div>
+                </div>
+
+                <!-- DAY 6 - Saturday, Nov 8 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-plane-arrival"></i> Saturday, November 8, 2025</div>
+                    <div class="time-activity-row"><span class="time-badge">12:45 AM</span><span class="activity-text"><i class="fas fa-plane-arrival"></i> Arrival in Manila</span></div>
+                    <div class="alert-note"><i class="fas fa-home"></i> Welcome back! 🇵🇭</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODAL: INDOCHINA 2025 -->
+    <!-- ============================================================ -->
+    <div class="modal-overlay" id="modal-indochina" onclick="closeModalOutside(event, 'modal-indochina')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">🌏 IndoChina 2025</span>
+                <button class="modal-close" onclick="closeModal('modal-indochina')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- DAY 1 - Sunday, Sep 14 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-plane"></i> Sunday, September 14, 2025</div>
+                    <div class="time-activity-row"><span class="time-badge">7:35 PM</span><span class="activity-text"><i class="fas fa-plane-departure"></i> Departure from Manila (Flight No. 5J 863)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">10:10 PM</span><span class="activity-text"><i class="fas fa-plane-arrival"></i> Arrival in Bangkok, Thailand (Don Mueang T1)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">11:00 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Hotel Check In - Picnic Hotel Bangkok</span></div>
+                </div>
+
+                <!-- DAY 2 - Monday, Sep 15 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-city"></i> Monday, September 15, 2025 · BANGKOK CITY TOUR</div>
+                    <div class="time-activity-row"><span class="time-badge">6:00 AM</span><span class="activity-text"><i class="fas fa-utensils"></i> Breakfast (included)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">7:00 AM</span><span class="activity-text"><i class="fas fa-bus"></i> BANGKOK CITY TOUR</span></div>
+                    <div class="time-activity-row"><span class="time-badge">4:00 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Back to Hotel</span></div>
+                    <div class="time-activity-row"><span class="time-badge">9:00 PM</span><span class="activity-text"><i class="fas fa-bed"></i> Lights Out</span></div>
+                </div>
+
+                <!-- DAY 3 - Tuesday, Sep 16 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-temple"></i> Tuesday, September 16, 2025 · BANGKOK → SIEM REAP</div>
+                    <div class="time-activity-row"><span class="time-badge">6:00 AM</span><span class="activity-text"><i class="fas fa-utensils"></i> Breakfast (included)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">7:00 AM</span><span class="activity-text"><i class="fas fa-hotel"></i> Bangkok Hotel Check Out</span></div>
+                    <div class="time-activity-row"><span class="time-badge">10:10 AM</span><span class="activity-text"><i class="fas fa-plane-departure"></i> Flight Departure to SAI (Cambodia)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">11:10 AM</span><span class="activity-text"><i class="fas fa-plane-arrival"></i> Arrival in Siem Reap</span></div>
+                    <div class="time-activity-row"><span class="time-badge">12:00 PM</span><span class="activity-text"><i class="fas fa-utensils"></i> Lunch</span></div>
+                    <div class="time-activity-row"><span class="time-badge">1:00 PM</span><span class="activity-text"><i class="fas fa-landmark"></i> ANGKOR WAT TOUR</span></div>
+                    <div class="time-activity-row"><span class="time-badge">5:00 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Hotel Check In - Pacific Hotel & Spa</span></div>
+                </div>
+
+                <!-- DAY 4 - Wednesday, Sep 17 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-water"></i> Wednesday, September 17, 2025 · SIEM REAP → HO CHI MINH</div>
+                    <div class="time-activity-row"><span class="time-badge">6:00 AM</span><span class="activity-text"><i class="fas fa-utensils"></i> Breakfast (included)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">8:00 AM</span><span class="activity-text"><i class="fas fa-hotel"></i> Siem Reap Hotel Check Out</span></div>
+                    <div class="time-activity-row"><span class="time-badge">12:10 PM</span><span class="activity-text"><i class="fas fa-plane-departure"></i> Flight Departure to SGN (Vietnam)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">2:00 PM</span><span class="activity-text"><i class="fas fa-plane-arrival"></i> Arrival in Ho Chi Minh City</span></div>
+                    <div class="time-activity-row"><span class="time-badge">3:00 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Hotel Check In - Saigon Kiko Hotel</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-clock"></i> FREE TIME - Night Market (Food Trip)</span></div>
+                </div>
+
+                <!-- DAY 5 - Thursday, Sep 18 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-river"></i> Thursday, September 18, 2025 · MEKONG DELTA TOUR</div>
+                    <div class="time-activity-row"><span class="time-badge">7:00 AM</span><span class="activity-text"><i class="fas fa-utensils"></i> Breakfast (included)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">8:00 AM</span><span class="activity-text"><i class="fas fa-boat"></i> MEKONG DELTA TOUR</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-utensils"></i> Lunch (included)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">9:30 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Hotel Check Out</span></div>
+                    <div class="time-activity-row"><span class="time-badge">10:10 PM</span><span class="activity-text"><i class="fas fa-plane-arrival"></i> Arrival in SGN Airport (check in)</span></div>
+                </div>
+
+                <!-- DAY 6 - Friday, Sep 19 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-plane-departure"></i> Friday, September 19, 2025 · DEPARTURE</div>
+                    <div class="time-activity-row"><span class="time-badge">1:10 AM</span><span class="activity-text"><i class="fas fa-plane-departure"></i> Departure from Vietnam (Flight No. 5J 752)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">5:15 AM</span><span class="activity-text"><i class="fas fa-plane-arrival"></i> Arrival to Manila (NAIA T3)</span></div>
+                    <div class="alert-note"><i class="fas fa-home"></i> Welcome back! 🇵🇭</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- MODAL: JAPAN 2025 -->
+    <!-- ============================================================ -->
+    <div class="modal-overlay" id="modal-japan2025" onclick="closeModalOutside(event, 'modal-japan2025')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">🇯🇵 Japan 2025</span>
+                <button class="modal-close" onclick="closeModal('modal-japan2025')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- DAY 1 - Thursday, Jul 3 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-plane"></i> Thursday, July 3, 2025</div>
+                    <div class="time-activity-row"><span class="time-badge">12:30 PM</span><span class="activity-text"><i class="fas fa-plane-departure"></i> Departure from Manila (Flight No. 5J 5056)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">6:10 PM</span><span class="activity-text"><i class="fas fa-plane-arrival"></i> Arrival to Tokyo (Narita Terminal 2)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">7:00 PM</span><span class="activity-text"><i class="fas fa-train"></i> Commute to Hotel</span></div>
+                    <div class="time-activity-row"><span class="time-badge">9:00 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Hotel Check In (APA Hotel Asakusa-Ekimae)</span></div>
+                </div>
+
+                <!-- DAY 2 - Friday, Jul 4 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-temple"></i> Friday, July 4, 2025 · ASAKUSA HISTORY EXPLORATION</div>
+                    <div class="time-activity-row"><span class="time-badge">6:00 AM</span><span class="activity-text"><i class="fas fa-utensils"></i> Breakfast</span></div>
+                    <div class="time-activity-row"><span class="time-badge">9:15 AM</span><span class="activity-text"><i class="fas fa-vest"></i> Meet up at Kimono Rental Place</span></div>
+                    <div class="time-activity-row"><span class="time-badge">9:30 AM</span><span class="activity-text"><i class="fas fa-walking"></i> Asakusa History Exploration</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-tree"></i> Sumida Park</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-info-circle"></i> Asakusa Culture Tourist Information Center</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-gate"></i> Kaminarimon</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-store"></i> Nakamise-dori Street</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-gate"></i> Hozomon</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-temple"></i> Sensoji Temple</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-shrine"></i> Asakusa Shrine</span></div>
+                    <div class="time-activity-row"><span class="time-badge">6:00 PM</span><span class="activity-text"><i class="fas fa-glass-cheers"></i> Izakaya @ Hoppy Street</span></div>
+                    <div class="time-activity-row"><span class="time-badge">8:00 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Back to Hotel</span></div>
+                </div>
+
+                <!-- DAY 3 - Saturday, Jul 5 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-city"></i> Saturday, July 5, 2025 · SHIBUYA & HARAJUKU</div>
+                    <div class="time-activity-row"><span class="time-badge">5:30 AM</span><span class="activity-text"><i class="fas fa-utensils"></i> Breakfast</span></div>
+                    <div class="time-activity-row"><span class="time-badge">7:00 AM</span><span class="activity-text"><i class="fas fa-train"></i> Commute to Shibuya</span></div>
+                    <div class="time-activity-row"><span class="time-badge">9:00 AM</span><span class="activity-text"><i class="fas fa-walking"></i> Shibuya Sightseeing</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-crosshairs"></i> Shibuya Scramble Crossing / Shibuya Sky</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-dog"></i> Hachiko Statue</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-store"></i> Shibuya Parco 6th floor - Anime Merch</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-utensils"></i> Lunch - Mawari Sushi</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-walking"></i> Harajuku: Takeshita Street → Togo Shrine</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-temple"></i> Meiji Jingu</span></div>
+                </div>
+
+                <!-- DAY 4 - Sunday, Jul 6 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-fuji"></i> Sunday, July 6, 2025 · MT. FUJI TOUR</div>
+                    <div class="time-activity-row"><span class="time-badge">5:30 AM</span><span class="activity-text"><i class="fas fa-utensils"></i> Breakfast</span></div>
+                    <div class="time-activity-row"><span class="time-badge">7:30 AM</span><span class="activity-text"><i class="fas fa-map-pin"></i> Meet up at JR Ueno St Park Gate</span></div>
+                    <div class="time-activity-row"><span class="time-badge">8:00 AM</span><span class="activity-text"><i class="fas fa-bus"></i> Mt. Fuji Tour</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-palace"></i> Sky Palace</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-shrine"></i> Fujiyoshida Sengen Shrine</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-water"></i> Lake Kawaguchi</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-utensils"></i> Lunch - Koshu Red Wine Meal</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-water"></i> Oshino Hakkai</span></div>
+                    <div class="time-activity-row"><span class="time-badge">6:00 PM</span><span class="activity-text"><i class="fas fa-utensils"></i> Dinner - Tokori Wagyu</span></div>
+                    <div class="time-activity-row"><span class="time-badge">8:00 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Back to Hotel</span></div>
+                </div>
+
+                <!-- DAY 5 - Monday, Jul 7 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-magic"></i> Monday, July 7, 2025 · HARRY POTTER STUDIO TOUR</div>
+                    <div class="time-activity-row"><span class="time-badge">5:30 AM</span><span class="activity-text"><i class="fas fa-utensils"></i> Breakfast</span></div>
+                    <div class="time-activity-row"><span class="time-badge">7:00 AM</span><span class="activity-text"><i class="fas fa-train"></i> Commute to Warner Bros</span></div>
+                    <div class="time-activity-row"><span class="time-badge">8:00 AM</span><span class="activity-text"><i class="fas fa-wand-magic-sparkles"></i> The Making of Harry Potter Studio Tour</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-train"></i> Platform 9 3/4</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-store"></i> Diagon Alley</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-church"></i> The Great Hall</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-building"></i> Ministry of Magic</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-tree"></i> Forbidden Forest</span></div>
+                    <div class="time-activity-row"><span class="time-badge"></span><span class="activity-text"><i class="fas fa-shopping-bag"></i> Souvenir Shop</span></div>
+                    <div class="time-activity-row"><span class="time-badge">6:00 PM</span><span class="activity-text"><i class="fas fa-utensils"></i> Dinner</span></div>
+                    <div class="time-activity-row"><span class="time-badge">9:00 PM</span><span class="activity-text"><i class="fas fa-hotel"></i> Back to Hotel</span></div>
+                </div>
+
+                <!-- DAY 6 - Tuesday, Jul 8 -->
+                <div class="day-block">
+                    <div class="day-title"><i class="fas fa-plane-departure"></i> Tuesday, July 8, 2025 · DEPARTURE</div>
+                    <div class="time-activity-row"><span class="time-badge">6:00 AM</span><span class="activity-text"><i class="fas fa-utensils"></i> Breakfast</span></div>
+                    <div class="time-activity-row"><span class="time-badge">7:00 AM</span><span class="activity-text"><i class="fas fa-hotel"></i> Hotel Check Out</span></div>
+                    <div class="time-activity-row"><span class="time-badge">7:45 AM</span><span class="activity-text"><i class="fas fa-train"></i> Commute to Airport</span></div>
+                    <div class="time-activity-row"><span class="time-badge">12:50 PM</span><span class="activity-text"><i class="fas fa-plane-departure"></i> Departure from Tokyo (Flight No. 5J 5056)</span></div>
+                    <div class="time-activity-row"><span class="time-badge">5:15 PM</span><span class="activity-text"><i class="fas fa-plane-arrival"></i> Arrival in Manila</span></div>
+                    <div class="alert-note"><i class="fas fa-home"></i> Welcome back! 🇵🇭</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('sideMenu');
+            const overlay = document.getElementById('menuOverlay');
+            menu.classList.toggle('open');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+            const menu = document.getElementById('sideMenu');
+            if (menu.classList.contains('open')) {
+                toggleMenu();
+            }
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOutside(event, id) {
+            if (event.target === document.getElementById(id)) {
+                closeModal(id);
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const openModals = document.querySelectorAll('.modal-overlay.active');
+                openModals.forEach(function(modal) {
+                    closeModal(modal.id);
+                });
+                const menu = document.getElementById('sideMenu');
+                if (menu.classList.contains('open')) {
+                    toggleMenu();
+                }
+            }
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        document.addEventListener('touchmove', function(e) {
+            const menu = document.getElementById('sideMenu');
+            if (!menu.classList.contains('open')) return;
+            const touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                toggleMenu();
+            }
+        }, { passive: true });
+    </script>
+
+</body>
+</html>
