@@ -1034,7 +1034,7 @@
             border-radius: 20px;
             border: 2px solid rgba(255, 215, 0, 0.2);
             background: rgba(0,0,0,0.3);
-            height: 500px;
+            height: 520px;
             width: 100%;
         }
         .form-modal-body .form-iframe-wrapper iframe {
@@ -1044,6 +1044,7 @@
             width: 100%;
             height: 100%;
             border: none;
+            background: #1a1a2e;
         }
         .form-modal-body .form-note {
             margin-top: 14px;
@@ -1055,12 +1056,12 @@
         }
         @media (max-width: 600px) {
             .form-modal-body .form-iframe-wrapper {
-                height: 420px;
+                height: 480px;
             }
         }
         @media (max-width: 480px) {
             .form-modal-body .form-iframe-wrapper {
-                height: 380px;
+                height: 440px;
             }
             .form-modal-body .form-title {
                 font-size: 1.3rem;
@@ -1231,7 +1232,7 @@
     </div> <!-- end home-card -->
 
     <!-- ============================================================ -->
-    <!-- MODAL: SIGN UP / PLAN YOUR ADVENTURE (Google Form)           -->
+    <!-- MODAL: SIGN UP / PLAN YOUR ADVENTURE (Google Form with custom theme) -->
     <!-- ============================================================ -->
     <div class="modal-overlay" id="modal-form" onclick="closeModalOutside(event, 'modal-form')">
         <div class="modal-content" style="max-width: 820px;">
@@ -1243,9 +1244,16 @@
                 <div class="form-icon"><i class="fas fa-globe-asia"></i></div>
                 <div class="form-title">✨ Let's Get You Started</div>
                 <div class="form-sub">Fill in your details and we'll save your travel preferences.</div>
-                <!-- Google Form iframe -->
+                <!-- Google Form iframe with custom CSS to match theme -->
                 <div class="form-iframe-wrapper">
-                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScab4_T-CVVq55FGL6E1L9Y9TczrxaygxGDLg8HXHI-T9jhrw/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                    <iframe 
+                        src="https://docs.google.com/forms/d/e/1FAIpQLScab4_T-CVVq55FGL6E1L9Y9TczrxaygxGDLg8HXHI-T9jhrw/viewform?embedded=true" 
+                        frameborder="0" 
+                        marginheight="0" 
+                        marginwidth="0"
+                        id="googleFormIframe"
+                        onload="styleGoogleForm()"
+                    >Loading…</iframe>
                 </div>
                 <div class="form-note">
                     <i class="fas fa-lock"></i> Your responses will be saved securely. We'll reach out with custom itineraries.
@@ -1625,6 +1633,173 @@
                 toggleMenu();
             }
         }, { passive: true });
+
+        // Function to inject custom CSS into the Google Form iframe
+        function styleGoogleForm() {
+            try {
+                const iframe = document.getElementById('googleFormIframe');
+                if (!iframe) return;
+                
+                // Try to access the iframe content
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (!iframeDoc) return;
+                
+                // Inject custom styles to match the webpage theme
+                const style = iframeDoc.createElement('style');
+                style.textContent = `
+                    /* Force dark theme on Google Form */
+                    body {
+                        background: #1a1a2e !important;
+                        color: #e0d0ff !important;
+                        font-family: 'Montserrat', sans-serif !important;
+                    }
+                    .freebirdFormviewerViewHeaderHeader {
+                        background: rgba(255, 215, 0, 0.08) !important;
+                        border-bottom: 2px solid #ffd700 !important;
+                        color: #ffd700 !important;
+                    }
+                    .freebirdFormviewerViewHeaderHeader h1 {
+                        color: #ffd700 !important;
+                        font-family: 'Fredoka One', cursive !important;
+                    }
+                    .freebirdFormviewerViewHeaderHeader .freebirdFormviewerViewHeaderDescription {
+                        color: #c0b0e0 !important;
+                    }
+                    .freebirdFormviewerViewQuestionItem {
+                        background: rgba(255, 255, 255, 0.04) !important;
+                        border-radius: 16px !important;
+                        padding: 16px !important;
+                        margin-bottom: 12px !important;
+                        border: 1px solid rgba(255, 215, 0, 0.08) !important;
+                    }
+                    .freebirdFormviewerViewQuestionItem .freebirdFormviewerViewItemsItemItemTitle {
+                        color: #ffd700 !important;
+                        font-weight: 700 !important;
+                    }
+                    .freebirdFormviewerViewQuestionItem .freebirdFormviewerViewItemsItemItemTitle .required {
+                        color: #ff6b9d !important;
+                    }
+                    .freebirdFormviewerViewQuestionItem .freebirdFormviewerViewItemsItemItemDescription {
+                        color: #c0b0e0 !important;
+                    }
+                    .freebirdFormviewerViewQuestionItem input,
+                    .freebirdFormviewerViewQuestionItem textarea,
+                    .freebirdFormviewerViewQuestionItem select {
+                        background: rgba(255, 255, 255, 0.06) !important;
+                        border: 2px solid rgba(255, 215, 0, 0.15) !important;
+                        border-radius: 12px !important;
+                        color: #e0d0ff !important;
+                        padding: 10px 14px !important;
+                        font-family: 'Montserrat', sans-serif !important;
+                    }
+                    .freebirdFormviewerViewQuestionItem input:focus,
+                    .freebirdFormviewerViewQuestionItem textarea:focus {
+                        border-color: #ffd700 !important;
+                        box-shadow: 0 0 20px rgba(255, 215, 0, 0.1) !important;
+                        outline: none !important;
+                    }
+                    .freebirdFormviewerViewQuestionItem .docssharedWizToggleLabeledContainer {
+                        color: #c0b0e0 !important;
+                    }
+                    .freebirdFormviewerViewQuestionItem .docssharedWizToggleLabeledContainer input[type="radio"]:checked + label,
+                    .freebirdFormviewerViewQuestionItem .docssharedWizToggleLabeledContainer input[type="checkbox"]:checked + label {
+                        color: #ffd700 !important;
+                    }
+                    .freebirdFormviewerViewQuestionItem .quantumWizRadioPaperradioChecked,
+                    .freebirdFormviewerViewQuestionItem .quantumWizCheckboxPapercheckboxChecked {
+                        border-color: #ffd700 !important;
+                        background: #ffd700 !important;
+                    }
+                    .freebirdFormviewerViewQuestionItem .quantumWizRadioPaperradioUnchecked,
+                    .freebirdFormviewerViewQuestionItem .quantumWizCheckboxPapercheckboxUnchecked {
+                        border-color: #8070a0 !important;
+                    }
+                    .freebirdFormviewerViewNavigationButtons {
+                        background: rgba(255, 215, 0, 0.08) !important;
+                        border-top: 2px solid rgba(255, 215, 0, 0.1) !important;
+                        padding: 16px 20px !important;
+                    }
+                    .freebirdFormviewerViewNavigationButtons .quantumWizButtonPaperbuttonBase {
+                        background: linear-gradient(135deg, #ff6b9d, #ff3366) !important;
+                        border: 2px solid #ffd700 !important;
+                        border-radius: 30px !important;
+                        color: white !important;
+                        font-weight: 800 !important;
+                        font-family: 'Fredoka One', cursive !important;
+                        padding: 8px 24px !important;
+                        transition: all 0.3s ease !important;
+                    }
+                    .freebirdFormviewerViewNavigationButtons .quantumWizButtonPaperbuttonBase:hover {
+                        transform: scale(1.05) !important;
+                        box-shadow: 0 3px 0 #cc0044, 0 0 30px rgba(255, 51, 102, 0.3) !important;
+                    }
+                    .freebirdFormviewerViewNavigationButtons .quantumWizButtonPaperbuttonBase .quantumWizButtonPaperbuttonLabel {
+                        color: white !important;
+                    }
+                    .freebirdFormviewerViewFooter {
+                        background: rgba(0, 0, 0, 0.3) !important;
+                        border-top: 1px solid rgba(255, 215, 0, 0.05) !important;
+                    }
+                    .freebirdFormviewerViewFooter a {
+                        color: #8070a0 !important;
+                    }
+                    .freebirdFormviewerViewProgressFooter {
+                        background: transparent !important;
+                    }
+                    .freebirdFormviewerViewResponsePageHeader {
+                        color: #ffd700 !important;
+                    }
+                    .freebirdFormviewerViewResponsePageHeader .freebirdFormviewerViewResponsePageHeaderTitle {
+                        font-family: 'Fredoka One', cursive !important;
+                    }
+                    .freebirdFormviewerViewResponsePageSubtitle {
+                        color: #c0b0e0 !important;
+                    }
+                    /* Fix for multiple choice and checkbox labels */
+                    .docssharedWizToggleLabeledContainer .docssharedWizToggleLabeledLabelText {
+                        color: #c0b0e0 !important;
+                    }
+                    .docssharedWizToggleLabeledContainer .docssharedWizToggleLabeledLabelText:hover {
+                        color: #ffd700 !important;
+                    }
+                    /* Scrollbar styling */
+                    ::-webkit-scrollbar {
+                        width: 6px;
+                    }
+                    ::-webkit-scrollbar-track {
+                        background: rgba(255, 255, 255, 0.02);
+                    }
+                    ::-webkit-scrollbar-thumb {
+                        background: #ffd700;
+                        border-radius: 10px;
+                    }
+                    ::-webkit-scrollbar-thumb:hover {
+                        background: #ffed4a;
+                    }
+                    /* Input placeholders */
+                    ::placeholder {
+                        color: #8070a0 !important;
+                        opacity: 0.7 !important;
+                    }
+                    /* Select dropdown */
+                    select option {
+                        background: #1a1a2e !important;
+                        color: #e0d0ff !important;
+                    }
+                `;
+                
+                // Try to append the style to the head
+                if (iframeDoc.head) {
+                    iframeDoc.head.appendChild(style);
+                } else {
+                    // Fallback: append to body
+                    iframeDoc.body.appendChild(style);
+                }
+            } catch (e) {
+                // If we can't access the iframe (cross-origin), we silently fail
+                console.log('Unable to style Google Form iframe directly. The form will use its default theme.');
+            }
+        }
     </script>
 
 </body>
